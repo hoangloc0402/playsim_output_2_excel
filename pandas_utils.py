@@ -32,7 +32,7 @@ def config_2_dataframe(config_data: List[Dict])-> pd.DataFrame:
     return df
 
 
-def kpi_2_data_frame(kpi_data: List[Dict])-> pd.DataFrame:
+def kpi_2_dataframe(kpi_data: List[Dict])-> pd.DataFrame:
     '''
         Convert data from all kpi.yaml files into 1 DataFrame object
         

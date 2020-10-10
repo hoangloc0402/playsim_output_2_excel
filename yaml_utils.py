@@ -1,11 +1,32 @@
 import os
 import yaml
-from collections import namedtuple
-from typing import Dict, List
+from typing import Dict, List, Generator
 
 
-YamlTuple = namedtuple('YamlTuple' , 'config kpi')
-YAML_FILE_NAMES = YamlTuple('config.yaml', 'kpi.yaml')
+CONFIG_FILE = 'config.yaml'
+KPI_FILE = 'kpi.yaml'
+
+
+class YAML_Data():
+    '''
+        Object for containing data read from one execution
+            directory
+
+    '''
+    # Each dictionary contains data read from 1 yaml file
+    config: List[Dict]
+    kpi: List[Dict]
+
+    def __init__(self) -> None:
+        self.config = list()
+        self.kpi = list()
+        
+    def add(self, config_data: Dict, kpi_data: Dict) -> None:
+        self.config.append(config_data)
+        self.kpi.append(kpi_data)
+    
+    def is_empty(self) -> bool:
+        return len(self.config) == len(self.kpi) == 0
 
 
 def load_yaml_file(path: str) -> Dict:
@@ -43,35 +64,48 @@ def list_all_public_dirs(path: str) -> List[str]:
     return dirs
 
 
-def list_yaml_paths_inside_exec_dir(path: str):
+def get_yaml_data_from_exec_dir(path: str) -> YAML_Data:
     '''
-        Inspecting through all subdirectory inside the execution
-            directory and retrieve paths of all yaml files
+        Read all config and kpi files inside one execution
+            directory
 
         Args:
-            path: absolute path to one execution folder
-
-        Returns:
-            yaml_paths (List[YamlTuple]): a list of YamlTuple, each
-                tuple contains 1 relative path for config and 1 for kpi file
-
+            path(str): path of an execution directory
+        
     '''
-    yaml_paths = list()
-
-    for sub_dir in list_all_public_dirs(path):
-        # Skip is either config file or kpi file is missing
-
-        config_relative_path = os.path.join(sub_dir, YAML_FILE_NAMES.config)
-        config_absolute_path = os.path.join(path, config_relative_path)
-        if not os.path.exists(config_absolute_path):
+    yaml_data = YAML_Data()
+    for root, _, files in os.walk(path):
+        if CONFIG_FILE not in files or KPI_FILE not in files:
             continue
+        config_data = load_yaml_file(
+            os.path.join(root, CONFIG_FILE))
+        kpi_data = load_yaml_file(
+            os.path.join(root, KPI_FILE))
+        yaml_data.add(config_data, kpi_data)
 
-        kpi_relative_path = os.path.join(sub_dir, YAML_FILE_NAMES.kpi)
-        kpi_absolute_path = os.path.join(path, kpi_relative_path)
-        if not os.path.exists(kpi_absolute_path):
+    return yaml_data
+
+
+def iterate_yaml_data_from_root(path: str) -> Generator[(str, str, YAML_Data)]:
+    '''
+        Load data by going through all execution directories
+
+        Args:
+            path(str): root path, the directory which contains multiple
+                execution directories
+        
+        Returns:
+            A tuple of root_path, name of the execution directory
+                and an YAML_Data object
+        
+    '''
+    for exec_dir in list_all_public_dirs(path):
+        print(f'START loading data from {exec_dir}:')
+        exec_dir_abs_path = os.path.join(path, exec_dir)
+        yaml_data = get_yaml_data_from_exec_dir(exec_dir_abs_path)
+
+        if yaml_data.is_empty():
+            print(f'NO DATA is found in {exec_dir}:')
             continue
-
-        yaml_tuple = YamlTuple(config_relative_path, kpi_relative_path)
-        yaml_paths.append(yaml_tuple)
-
-    return yaml_paths
+        print(f'FINISHED loading data from {exec_dir}:')
+        yield path, exec_dir, yaml_data
