@@ -86,7 +86,7 @@ def get_yaml_data_from_exec_dir(path: str) -> YAML_Data:
     return yaml_data
 
 
-def iterate_yaml_data_from_root(path: str) -> Generator[(str, str, YAML_Data)]:
+def iterate_yaml_data_from_root(path: str) -> Generator[str, YAML_Data]:
     '''
         Load data by going through all execution directories
 
@@ -100,12 +100,12 @@ def iterate_yaml_data_from_root(path: str) -> Generator[(str, str, YAML_Data)]:
         
     '''
     for exec_dir in list_all_public_dirs(path):
-        print(f'START loading data from {exec_dir}:')
+        print(f'LOADING FROM .../{exec_dir}/: START!')
         exec_dir_abs_path = os.path.join(path, exec_dir)
         yaml_data = get_yaml_data_from_exec_dir(exec_dir_abs_path)
 
         if yaml_data.is_empty():
-            print(f'NO DATA is found in {exec_dir}:')
+            print(f'LOADING FROM .../{exec_dir}/: NO DATA!')
             continue
-        print(f'FINISHED loading data from {exec_dir}:')
-        yield path, exec_dir, yaml_data
+        print(f'LOADING FROM .../{exec_dir}/: DONE!')
+        yield exec_dir, yaml_data
