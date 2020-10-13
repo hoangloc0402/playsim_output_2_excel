@@ -3,7 +3,7 @@
 A tool for compiling all config.yaml and kpi.yaml files inside one branch directory into one single Excel (.xlxs) file.
 
 ### Directory structure:
-The branch directory must have the following structure, both config.yaml & kpi.yaml file must exist in each execution folder:
+The branch directory must have the following structure:
 <pre>
 /branch_dir
 │
@@ -17,6 +17,7 @@ The branch directory must have the following structure, both config.yaml & kpi.y
 │   └── ...
 └── ...
 </pre>
+Both the config.yaml & kpi.yaml file must exist in each execution folder.
 
 ### Quick start:
 Command:
