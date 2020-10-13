@@ -97,6 +97,7 @@ def get_yaml_data_from_branch_dir(path: str) -> YAML_Data:
         print(f'\t[{count}] Reading .../{sub_dir}/')
         count += 1
         config_data = load_yaml_file(config_path)
+        config_data['execution_folder'] = sub_dir
         kpi_data = load_yaml_file(kpi_path)
         yaml_data.add(config_data, kpi_data)
 
