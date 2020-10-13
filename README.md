@@ -9,11 +9,13 @@ The branch directory must have structure like described bellow both the config.y
 │
 ├── execution_dir_1
 │   ├── config.yaml
-│   └── kpi.yaml
+│   ├── kpi.yaml
+│   └── ...
 │
 ├── execution_dir_2
 │   ├── config.yaml
-│   └── kpi.yaml
+│   ├── kpi.yaml
+│   └── ...
 │ 
 └── ...
 </pre>
