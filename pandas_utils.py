@@ -44,8 +44,8 @@ def dicts_2_dataframe(data: List[Dict]) -> pd.DataFrame:
         pd_data.append(values)
 
     df = pd.DataFrame(
-        data = pd_data,
-        columns = column_labels,
+        data=pd_data,
+        columns=column_labels,
     )
     return df
 
@@ -63,7 +63,7 @@ def config_2_dataframe(config_data: List[Dict]) -> pd.DataFrame:
     return dicts_2_dataframe(config_data)
 
 
-def kpi_2_dataframes(kpi_data: List[Dict])-> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
+def kpi_2_dataframes(kpi_data: List[Dict]) -> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
     '''
         Convert data from all kpi.yaml files into DataFrame objects
 

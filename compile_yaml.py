@@ -22,9 +22,8 @@ BRANCH_PATH = args.branch_path
 OUTPUT_PATH = args.output_path if args.output_path else BRANCH_PATH
 
 EXCEL_FILE_NAME = args.file_name if args.file_name else 'playsim_yaml_compiled.xlsx'
-    
-EXCEL_PATH = os.path.join(OUTPUT_PATH, EXCEL_FILE_NAME)
 
+EXCEL_PATH = os.path.join(OUTPUT_PATH, EXCEL_FILE_NAME)
 
 
 yaml_data = get_yaml_data_from_branch_dir(BRANCH_PATH)
@@ -44,6 +43,6 @@ if not yaml_data.is_empty():
     with pd.ExcelWriter(EXCEL_PATH) as writer:
         for df, sheet_name in df_n_sheet_name:
             if df is not None:
-                df.to_excel( writer, sheet_name=sheet_name, index=False)
+                df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     print(f'SAVING TO {EXCEL_PATH}: DONE!')
