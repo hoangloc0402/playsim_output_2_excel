@@ -20,7 +20,7 @@ The branch directory must have the following structure:
 Both the config.yaml & kpi.yaml file must exist in each execution folder.
 
 ### Quick start:
-Check the notebook file compile_yaml.ipynb for quick dataframe visualization.
+Check the notebook file <strong>compile_yaml.ipynb</strong> for quick dataframe visualization.
 
 Command:
 ```
