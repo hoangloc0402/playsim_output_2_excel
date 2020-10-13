@@ -11,12 +11,10 @@ The branch directory must have structure like described bellow, both the config.
 │   ├── config.yaml
 │   ├── kpi.yaml
 │   └── ...
-│
 ├── execution_dir_2
 │   ├── config.yaml
 │   ├── kpi.yaml
 │   └── ...
-│ 
 └── ...
 </pre>
 
@@ -27,12 +25,12 @@ Command:
 ```
 <ul>
   <li> [-o] [--output_path]: path to the output directory. If not specified, the file will be exported to the branch directory.</li>
-  <li> [-f] [--file_name]: name for the output excel file. Default name is <strong>'playsim_yaml_compiled.xlsx'</strong></li>
+  <li> [-f] [--file_name]: name for the output excel file. Default name is <strong>'playsim_yaml_compiled.xlsx'</strong>.</li>
 </ul>
 <br>
 If either config.yaml or kpi.yaml is missing, the execution directory which contains that file will be ignored.
 <br>
-All missing values will be replaced with 'N/A'
+All missing values will be replaced with 'N/A'.
 
 ### Maintenance:
 Created by Loc Hoang Nguyen, Research Team, Grid Inc
