@@ -8,6 +8,7 @@ from pandas_utils import (
     config_2_dataframe,
     kpi_2_dataframes,
 )
+from constants import DEFAULT_EXCEL_FILE_NAME
 
 
 parser = argparse.ArgumentParser()
@@ -21,7 +22,7 @@ BRANCH_PATH = args.branch_path
 
 OUTPUT_PATH = args.output_path if args.output_path else BRANCH_PATH
 
-EXCEL_FILE_NAME = args.file_name if args.file_name else 'playsim_yaml_compiled.xlsx'
+EXCEL_FILE_NAME = args.file_name if args.file_name else DEFAULT_EXCEL_FILE_NAME
 
 EXCEL_PATH = os.path.join(OUTPUT_PATH, EXCEL_FILE_NAME)
 

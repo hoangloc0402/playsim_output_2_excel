@@ -3,9 +3,7 @@ import re
 import yaml
 from typing import Dict, List
 
-
-CONFIG_FILE = 'config.yaml'
-KPI_FILE = 'kpi.yaml'
+from constants import CONFIG_FILE, KPI_FILE
 
 
 class YAML_Data():
