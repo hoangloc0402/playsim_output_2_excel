@@ -1,6 +1,6 @@
 ## playsim_output_2_excel
 
-A tool for compiling all config.yaml and kpi.yaml files inside one branch directory into one single Excel (.xlxs) file.
+A tool for compiling all config.yaml and kpi.yaml files inside one branch directory into one single Excel (.xlsx) file.
 
 ### Directory structure:
 The branch directory must have the following structure:
