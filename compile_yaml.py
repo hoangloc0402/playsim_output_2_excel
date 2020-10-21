@@ -31,13 +31,14 @@ yaml_data = get_yaml_data_from_branch_dir(BRANCH_PATH)
 
 if not yaml_data.is_empty():
     df_config = config_2_dataframe(yaml_data.config)
-    df_kpi, df_shipment_amount, df_shipment_restriction = kpi_2_dataframes(yaml_data.kpi)
+    df_kpi, df_shipment_amount, df_shipment_restriction, df_ship_kpis = kpi_2_dataframes(yaml_data.kpi)
 
     df_n_sheet_name = (
         (df_config, '設定条件'),
         (df_kpi, 'KPI'),
         (df_shipment_amount, 'Shipment Amount'),
         (df_shipment_restriction, 'Shipment Restriction'),
+        (df_ship_kpis, 'Ship KPIs'),
     )
 
     print(f'SAVING TO {EXCEL_PATH}: START!')

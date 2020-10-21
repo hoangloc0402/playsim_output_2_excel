@@ -1,8 +1,13 @@
 import pandas as pd
 from copy import deepcopy as clone
+from collections import OrderedDict 
 from typing import Dict, List
 
-from constants import MISSING_VALUE, KPI_MUST_HAVE_ATTRS, SHIPMENT_MUST_HAVE_ATTRS
+from constants import (
+    MISSING_VALUE,
+    KPI_MUST_HAVE_ATTRS,
+    SHIPMENT_MUST_HAVE_ATTRS,
+)
 
 
 def dicts_2_dataframe(dicts: List[Dict],
@@ -80,16 +85,32 @@ def kpi_2_dataframes(kpi_data: List[Dict]) -> (pd.DataFrame, pd.DataFrame, pd.Da
             3 dataframes for KPI, Shipment Amount and Shipment Restriction respectively.
 
     '''
-    list_kpi, list_shipment_amount, list_shipment_restriction = list(), list(), list()
+    list_kpi, list_shipment_amount = list(), list()
+    list_shipment_restriction, list_ship_kpis = list(), list()
 
+    # TODO: These loops make it so complicated
+    # For each kpi.yaml file
     for data in kpi_data:
         list_kpi.append(dict())
+        # For each key, val in one kpi.yaml file
         for key, val in data.items():
             if isinstance(val, dict):
                 if key == 'per_oil_amt':
                     list_shipment_amount.append(val)
+
                 elif key == 'kisei':
                     list_shipment_restriction.append(val)
+
+                elif key == 'ship_KPIs':
+                    new_dict = OrderedDict()
+                    for ship_name, ship_kpis in val.items():
+                        # ship_kpis is a dict
+                        for kpi_name, kpi_val in ship_kpis.items():
+                            new_key = f'{ship_name}:{kpi_name}'
+                            new_dict[new_key] = kpi_val
+
+                    list_ship_kpis.append(new_dict)
+
             else:
                 list_kpi[-1][key] = val
 
@@ -105,4 +126,7 @@ def kpi_2_dataframes(kpi_data: List[Dict]) -> (pd.DataFrame, pd.DataFrame, pd.Da
         list_shipment_restriction,
         SHIPMENT_MUST_HAVE_ATTRS,
     )
-    return df_kpi, df_shipment_amount, df_shipment_restriction
+    df_ship_kpis = dicts_2_dataframe(
+        list_ship_kpis,
+    )
+    return df_kpi, df_shipment_amount, df_shipment_restriction, df_ship_kpis
